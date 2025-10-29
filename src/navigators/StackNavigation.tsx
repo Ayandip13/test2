@@ -102,15 +102,7 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
             activeOpacity={0.8}
             style={[styles.tabButton, isCenter && styles.centerButton]}
           >
-            <View
-              style={[
-                isCenter && isFocused
-                  ? styles.activeIconContainer
-                  : isCenter
-                  ? styles.inactiveIconContainer
-                  : null,
-              ]}
-            >
+            <View style={[isCenter ? styles.alwaysActiveIconContainer : null]}>
               <Image
                 source={iconSource}
                 style={{
@@ -183,7 +175,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: '#001F2D',
     height: 75,
-    justifyContent: 'space-around',
     alignItems: 'center',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
@@ -192,17 +183,16 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     elevation: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 6,
+    paddingHorizontal: 25,
   },
   tabButton: {
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
   centerButton: {
-    marginTop: Platform.select({ ios: -25, android: -30 }),
+    bottom: 20,
+    alignSelf: 'center',
   },
   activeIconContainer: {
     backgroundColor: '#0E3C3F',
@@ -221,5 +211,13 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontSize: 12,
     fontWeight: '500',
+  },
+  alwaysActiveIconContainer: {
+    backgroundColor: '#0E3C3F',
+    borderRadius: 50,
+    padding: 15,
+    borderWidth: 3,
+    borderColor: '#F5CC59',
+    elevation: 6,
   },
 });
