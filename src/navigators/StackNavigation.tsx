@@ -1,17 +1,32 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet, Platform } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  Image,
+  Platform,
+} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {
+  BottomTabBarProps,
+  BottomTabNavigationOptions,
+} from '@react-navigation/bottom-tabs';
+import { ParamListBase, RouteProp } from '@react-navigation/native';
 
 import HomeScreen from '../Screens/HomeScreen';
 import Play from '../Screens/Play';
 import Learn from '../Screens/Learn';
 import Rankings from '../Screens/Rankings';
+import Crypto from '../Screens/Crypto';
 
 const Tab = createBottomTabNavigator();
 
-const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigation }) => {
+const CustomTabBar: React.FC<BottomTabBarProps> = ({
+  state,
+  descriptors,
+  navigation,
+}) => {
   return (
     <View style={styles.tabContainer}>
       {state.routes.map((route, index) => {
@@ -24,11 +39,13 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigat
             : route.name;
 
         const isFocused = state.index === index;
+        const isCenter = route.name === 'Crypto';
 
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
             target: route.key,
+            canPreventDefault: true,
           });
 
           if (!isFocused && !event.defaultPrevented) {
@@ -43,35 +60,43 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigat
           });
         };
 
-        // Set icons for each tab
-        let iconName: string;
+        // ✅ Choose icons for each tab
+        let iconSource;
         switch (route.name) {
           case 'Home':
-            iconName = 'home-outline';
+            iconSource = isFocused
+              ? require('../../assets/Home-outline.png')
+              : require('../../assets/home.png');
             break;
           case 'Play':
-            iconName = 'game-controller-outline';
+            iconSource = isFocused
+              ? require('../../assets/game.png')
+              : require('../../assets/game.png');
+            break;
+          case 'Crypto':
+            iconSource = isFocused
+              ? require('../../assets/graph.png')
+              : require('../../assets/graph.png');
             break;
           case 'Learn':
-            iconName = 'bar-chart-outline';
+            iconSource = isFocused
+              ? require('../../assets/learn.png')
+              : require('../../assets/learn.png');
             break;
           case 'Rankings':
-            iconName = 'trophy-outline';
+            iconSource = isFocused
+              ? require('../../assets/learn.png')
+              : require('../../assets/learn.png');
             break;
           default:
-            iconName = 'ellipse-outline';
+            iconSource = require('../../assets/home.png');
         }
-
-        const iconColor = isFocused ? '#F5CC59' : '#fff';
-        const isCenter = route.name === 'Learn';
 
         return (
           <TouchableOpacity
             key={index}
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
-            accessibilityLabel={options.tabBarAccessibilityLabel}
-            testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
             activeOpacity={0.8}
@@ -86,11 +111,24 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({ state, descriptors, navigat
                   : null,
               ]}
             >
-              <Icon name={iconName} size={24} color={iconColor} />
+              <Image
+                source={iconSource}
+                style={{
+                  width: isCenter ? 32 : 24,
+                  height: isCenter ? 32 : 24,
+                  resizeMode: 'contain',
+                }}
+              />
             </View>
+
             {!isCenter && (
-              <Text style={{ color: iconColor, marginTop: 4, fontSize: 12 }}>
-                {label}
+              <Text
+                style={[
+                  styles.label,
+                  { color: isFocused ? '#F5CC59' : '#fff' },
+                ]}
+              >
+                {typeof label === 'string' ? label : ''}
               </Text>
             )}
           </TouchableOpacity>
@@ -107,12 +145,33 @@ function BottomTabs() {
         headerShown: false,
         tabBarShowLabel: false,
       }}
-      tabBar={(props) => <CustomTabBar {...props} />}
+      tabBar={props => <CustomTabBar {...props} />}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: 'Home' }} />
-      <Tab.Screen name="Play" component={Play} options={{ tabBarLabel: 'Play' }} />
-      <Tab.Screen name="Learn" component={Learn} options={{ tabBarLabel: 'Learn' }} />
-      <Tab.Screen name="Rankings" component={Rankings} options={{ tabBarLabel: 'Rankings' }} />
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ tabBarLabel: 'Home' }}
+      />
+      <Tab.Screen
+        name="Play"
+        component={Play}
+        options={{ tabBarLabel: 'Play' }}
+      />
+      <Tab.Screen
+        name="Crypto"
+        component={Crypto}
+        options={{ tabBarLabel: 'Crypto' }}
+      />
+      <Tab.Screen
+        name="Learn"
+        component={Learn}
+        options={{ tabBarLabel: 'Learn' }}
+      />
+      <Tab.Screen
+        name="Rankings"
+        component={Rankings}
+        options={{ tabBarLabel: 'Rankings' }}
+      />
     </Tab.Navigator>
   );
 }
@@ -132,8 +191,8 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    elevation: 10, // Android shadow
-    shadowColor: '#000', // iOS shadow
+    elevation: 10,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: -2 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
@@ -143,7 +202,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   centerButton: {
-    marginTop: Platform.select({ ios: -25, android: -30 }), // slight platform adjustment
+    marginTop: Platform.select({ ios: -25, android: -30 }),
   },
   activeIconContainer: {
     backgroundColor: '#0E3C3F',
@@ -157,5 +216,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     padding: 15,
     opacity: 0.5,
+  },
+  label: {
+    marginTop: 4,
+    fontSize: 12,
+    fontWeight: '500',
   },
 });
