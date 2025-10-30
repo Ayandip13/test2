@@ -75,8 +75,8 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
             break;
           case 'Crypto':
             iconSource = isFocused
-              ? require('../../assets/graph.png')
-              : require('../../assets/graph.png');
+              ? require('../../assets/Crypto.png')
+              : require('../../assets/Crypto.png');
             break;
           case 'Learn':
             iconSource = isFocused
@@ -85,8 +85,8 @@ const CustomTabBar: React.FC<BottomTabBarProps> = ({
             break;
           case 'Rankings':
             iconSource = isFocused
-              ? require('../../assets/learn.png')
-              : require('../../assets/learn.png');
+              ? require('../../assets/graph.png')
+              : require('../../assets/graph.png');
             break;
           default:
             iconSource = require('../../assets/home.png');
@@ -212,12 +212,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
-  alwaysActiveIconContainer: {
-    backgroundColor: '#0E3C3F',
-    borderRadius: 50,
-    padding: 15,
-    borderWidth: 3,
-    borderColor: '#F5CC59',
-    elevation: 6,
-  },
+  // alwaysActiveIconContainer: {
+  //   backgroundColor: '#0E3C3F',
+  //   borderRadius: 50,
+  //   padding: 15,
+  //   borderWidth: 3,
+  //   borderColor: '#F5CC59',
+  //   elevation: 6,
+  // },
 });
