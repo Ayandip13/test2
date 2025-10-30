@@ -11,16 +11,16 @@ import {
   Platform,
   SafeAreaView,
 } from 'react-native';
+import LevelBadge from '../component/LevelBadge';
 
 const { width: W, height: H } = Dimensions.get('window');
-// baseline design width used to scale sizes (iPhone 11/12-ish)
 const guidelineBaseWidth = 390;
 const scale = size => (W / guidelineBaseWidth) * size;
 const isIOS = Platform.OS === 'ios';
 
 const HomeScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#00172D' }}>
+    <View style={{ flex: 1, backgroundColor: '#00172D' }}>
       <StatusBar barStyle="light-content" backgroundColor="#00172D" />
       <ScrollView
         style={{ flex: 1, backgroundColor: '#00172D' }}
@@ -30,7 +30,7 @@ const HomeScreen = () => {
         {/* Top background / hero */}
         <ImageBackground
           source={require('../../assets/Subtract.png')}
-          resizeMode="cover"
+          resizeMode="contain"
           style={{
             height: scale(180),
             paddingTop: scale(8),
@@ -130,9 +130,10 @@ const HomeScreen = () => {
               marginHorizontal: scale(2),
             }}
           >
-            {/* Left coin bubble */}
             <View
               style={{
+                marginTop: scale(16),
+                left: scale(10),
                 flexDirection: 'row',
                 alignItems: 'center',
                 backgroundColor: 'rgba(255,255,255,0.04)',
@@ -185,33 +186,12 @@ const HomeScreen = () => {
             {/* Right level bubble */}
             <View
               style={{
-                alignItems: 'center',
-                backgroundColor: 'rgba(255,255,255,0.04)',
-                paddingHorizontal: scale(12),
-                paddingVertical: scale(8),
-                borderRadius: scale(22),
-                minWidth: scale(110),
-                justifyContent: 'center',
-                flexDirection: 'row',
+                marginLeft: scale(10),
+                marginTop: scale(18),
+                right: scale(18),
               }}
             >
-              <Text
-                style={{
-                  color: '#FFFFFF',
-                  fontSize: scale(16),
-                  fontWeight: '700',
-                }}
-              >
-                Level 10
-              </Text>
-              <Image
-                style={{
-                  marginLeft: scale(8),
-                  height: scale(30),
-                  width: scale(30),
-                }}
-                source={require('../../assets/level-badge.png')}
-              />
+              <LevelBadge />
             </View>
           </View>
         </ImageBackground>
@@ -221,6 +201,7 @@ const HomeScreen = () => {
         <Image
           style={{
             width: '100%',
+            opacity: 0.5,
             top: scale(10),
             height: scale(80),
           }}
@@ -228,9 +209,9 @@ const HomeScreen = () => {
         />
         <View
           style={{
-            marginTop: scale(-10),
+            marginTop: scale(-12),
             overflow: 'hidden',
-            backgroundColor: '#002A53',
+            backgroundColor: 'rgba(0, 42, 83, 0)',
             height: scale(120),
           }}
         >
@@ -270,47 +251,40 @@ const HomeScreen = () => {
           <View
             style={{
               backgroundColor: '#002B4F',
-              padding: scale(16),
               height: '100%',
               alignItems: 'center',
               overflow: 'hidden',
             }}
           >
+            <Image
+              style={{ width: '100%', top: scale(-10) }}
+              source={require('../../assets/Subtract2.png')}
+            />
             <Text
               style={{
                 color: '#FFFFFF',
-                fontSize: scale(18),
+                fontSize: scale(22),
                 fontWeight: '700',
-                marginBottom: scale(12),
-                textAlign: 'center',
+                marginTop: scale(-35),
               }}
             >
-              Ongoing quiz’s
+              Ongoing Quiz
             </Text>
             <View
               style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: scale(6),
+                marginTop: scale(-15),
               }}
             >
-              <View
-                style={{
-                  backgroundColor: '#013B77',
-                  paddingHorizontal: scale(12),
-                  paddingVertical: scale(6),
-                  borderRadius: scale(10),
-                }}
-              >
-                <Text
+              <View>
+                <Image
+                  source={require('../../assets/bitcoinQuizBadge.png')}
                   style={{
-                    color: '#8EE5FF',
-                    fontWeight: '800',
-                    fontSize: scale(13),
+                    width: scale(200),
+                    height: scale(100),
+                    marginBottom: scale(-13),
                   }}
-                >
-                  Bitcoin Quiz Championship
-                </Text>
+                  resizeMode="contain"
+                />
               </View>
             </View>
 
@@ -350,7 +324,7 @@ const HomeScreen = () => {
             {/* reward and level */}
             <Text
               style={{
-                color: '#FFD166',
+                color: '#ffffff',
                 fontWeight: '700',
                 marginBottom: scale(4),
               }}
@@ -370,108 +344,64 @@ const HomeScreen = () => {
                 gap: scale(10),
               }}
             >
-              <TouchableOpacity
-                activeOpacity={0.85}
+              <Image
+                source={require('../../assets/playButton.png')}
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  backgroundColor: '#B23EFF',
-                  borderRadius: scale(18),
-                  paddingVertical: scale(10),
-                  paddingHorizontal: scale(22),
-                  shadowColor: '#B23EFF',
-                  shadowOffset: { width: 0, height: 6 },
-                  shadowOpacity: 0.15,
-                  shadowRadius: 12,
-                  elevation: 4,
+                  width: scale(100),
+                  height: scale(40),
+                  borderRadius: scale(10),
                 }}
-              >
-                <Image
-                  source={require('../../assets/play.png')}
-                  style={{
-                    width: scale(18),
-                    height: scale(18),
-                    marginRight: scale(8),
-                    tintColor: '#fff',
-                  }}
-                />
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontWeight: '800',
-                    fontSize: scale(14),
-                  }}
-                >
-                  Play
-                </Text>
-              </TouchableOpacity>
+              />
 
-              <TouchableOpacity
-                activeOpacity={0.85}
+              <Image
+                source={require('../../assets/statButton.png')}
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  backgroundColor: '#2AC1C8',
-                  borderRadius: scale(18),
-                  paddingVertical: scale(10),
-                  paddingHorizontal: scale(20),
-                  // slightly elevated
-                  shadowColor: '#2AC1C8',
-                  shadowOffset: { width: 0, height: 6 },
-                  shadowOpacity: 0.12,
-                  shadowRadius: 8,
-                  elevation: 4,
+                  width: scale(100),
+                  height: scale(40),
+                  borderRadius: scale(10),
                 }}
-              >
-                <Image
-                  source={require('../../assets/stats.png')}
-                  style={{
-                    width: scale(18),
-                    height: scale(18),
-                    marginRight: scale(8),
-                    tintColor: '#fff',
-                  }}
-                />
-                <Text
-                  style={{
-                    color: '#fff',
-                    fontWeight: '800',
-                    fontSize: scale(14),
-                  }}
-                >
-                  Statistics
-                </Text>
-              </TouchableOpacity>
+              />
 
-              <TouchableOpacity
-                activeOpacity={0.85}
+              <Image
+                source={require('../../assets/saveButton.png')}
                 style={{
-                  width: scale(52),
-                  height: scale(52),
-                  borderRadius: scale(26),
-                  backgroundColor: '#001D3A',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  shadowColor: '#F7D154',
-                  shadowOffset: { width: 0, height: 6 },
-                  shadowOpacity: 0.18,
-                  shadowRadius: 12,
-                  elevation: 6,
+                  width: scale(60),
+                  height: scale(40),
                 }}
-              >
-                <Image
-                  source={require('../../assets/spin-wheel.png')}
-                  style={{ width: scale(46), height: scale(46) }}
-                />
-              </TouchableOpacity>
+              />
             </View>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              style={{
+                width: scale(60),
+                height: scale(60),
+                borderRadius: scale(50),
+                // backgroundColor: '#001D3A',
+                justifyContent: 'center',
+                alignItems: 'center',
+                shadowColor: '#F7D154',
+                elevation: 6,
+                marginLeft: scale(250),
+                bottom: scale(70),
+              }}
+            >
+              <Image
+                source={require('../../assets/spin-wheel.png')}
+                style={{
+                  width: scale(80),
+                  height: scale(80),
+                  alignContent: 'center',
+                  justifyContent: 'center',
+                }}
+              />
+            </TouchableOpacity>
           </View>
         </View>
 
         {/* Bottom padding to ensure scroll spacing */}
         <View style={{ height: scale(30) }} />
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
