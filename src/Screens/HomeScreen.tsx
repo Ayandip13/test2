@@ -124,7 +124,6 @@ const HomeScreen = () => {
           <View
             style={{
               flexDirection: 'row',
-              // justifyContent: 'space-between',
               alignSelf: 'center',
               alignItems: 'center',
               marginTop: scale(34),
@@ -218,9 +217,18 @@ const HomeScreen = () => {
         </ImageBackground>
 
         {/* Greeting */}
+
+        <Image
+          style={{
+            width: '100%',
+            top: scale(10),
+            height: scale(80),
+          }}
+          source={require('../../assets/Subtract2.png')}
+        />
         <View
           style={{
-            marginTop: scale(14),
+            marginTop: scale(-10),
             overflow: 'hidden',
             backgroundColor: '#002A53',
             height: scale(120),
@@ -243,6 +251,7 @@ const HomeScreen = () => {
             </Text>
           </View>
         </View>
+
         <Image
           source={require('../../assets/refer-banner.png')}
           resizeMode="cover"
