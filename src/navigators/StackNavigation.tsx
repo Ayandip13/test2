@@ -212,12 +212,4 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '500',
   },
-  // alwaysActiveIconContainer: {
-  //   backgroundColor: '#0E3C3F',
-  //   borderRadius: 50,
-  //   padding: 15,
-  //   borderWidth: 3,
-  //   borderColor: '#F5CC59',
-  //   elevation: 6,
-  // },
 });

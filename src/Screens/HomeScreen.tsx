@@ -9,25 +9,22 @@ import {
   ImageBackground,
   Dimensions,
   Platform,
-  SafeAreaView,
 } from 'react-native';
 import LevelBadge from '../component/LevelBadge';
+import { useNavigation } from '@react-navigation/native';
 
-const { width: W, height: H } = Dimensions.get('window');
+const { width: W } = Dimensions.get('window');
 const guidelineBaseWidth = 390;
 const scale = size => (W / guidelineBaseWidth) * size;
-const isIOS = Platform.OS === 'ios';
+// const isIOS = Platform.OS === 'ios';
 
 const HomeScreen = () => {
+  const navigation = useNavigation()
   return (
     <View style={{ flex: 1, backgroundColor: '#00172D' }}>
       <StatusBar barStyle="light-content" backgroundColor="#00172D" />
-      <ScrollView
-        style={{ flex: 1, backgroundColor: '#00172D' }}
-        contentContainerStyle={{ paddingBottom: scale(40) }}
-        showsVerticalScrollIndicator={false}
-      >
-        {/* Top background / hero */}
+
+      <View style={{ backgroundColor: '#00172D', zIndex: 10 }}>
         <ImageBackground
           source={require('../../assets/Subtract.png')}
           resizeMode="contain"
@@ -36,9 +33,9 @@ const HomeScreen = () => {
             paddingTop: scale(8),
             paddingHorizontal: scale(16),
             justifyContent: 'flex-start',
+            zIndex: 10,
           }}
         >
-          {/* Header row */}
           <View
             style={{
               flexDirection: 'row',
@@ -105,7 +102,7 @@ const HomeScreen = () => {
                   }}
                 />
               </TouchableOpacity>
-              <TouchableOpacity activeOpacity={0.9}>
+              <TouchableOpacity activeOpacity={0.9} onPress={()=>navigation.navigate('Crypto')}>
                 <Image
                   source={require('../../assets/profile-icon.png')}
                   style={{
@@ -120,7 +117,6 @@ const HomeScreen = () => {
             </View>
           </View>
 
-          {/* Center profile / coins / level row */}
           <View
             style={{
               flexDirection: 'row',
@@ -183,7 +179,6 @@ const HomeScreen = () => {
               />
             </View>
 
-            {/* Right level bubble */}
             <View
               style={{
                 marginLeft: scale(10),
@@ -195,21 +190,25 @@ const HomeScreen = () => {
             </View>
           </View>
         </ImageBackground>
+      </View>
 
-        {/* Greeting */}
-
+      <ScrollView
+        style={{ flex: 1, backgroundColor: '#00172D' }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: scale(60) }}
+      >
         <Image
           style={{
             width: '100%',
             opacity: 0.5,
-            top: scale(10),
+            top: scale(-10),
             height: scale(80),
           }}
           source={require('../../assets/Subtract2.png')}
         />
         <View
           style={{
-            marginTop: scale(-12),
+            marginTop: scale(-40),
             overflow: 'hidden',
             backgroundColor: 'rgba(0, 42, 83, 0)',
             height: scale(120),
@@ -240,14 +239,11 @@ const HomeScreen = () => {
             width: '100%',
             height: scale(150),
             top: scale(-80),
+            zIndex: 5,
           }}
         />
 
-        <View
-          style={{
-            marginTop: scale(-70),
-          }}
-        >
+        <View style={{ marginTop: scale(-100) }}>
           <View
             style={{
               backgroundColor: '#002B4F',
@@ -270,25 +266,19 @@ const HomeScreen = () => {
             >
               Ongoing Quiz
             </Text>
-            <View
-              style={{
-                marginTop: scale(-15),
-              }}
-            >
-              <View>
-                <Image
-                  source={require('../../assets/bitcoinQuizBadge.png')}
-                  style={{
-                    width: scale(200),
-                    height: scale(100),
-                    marginBottom: scale(-13),
-                  }}
-                  resizeMode="contain"
-                />
-              </View>
+
+            <View style={{ marginTop: scale(-15) }}>
+              <Image
+                source={require('../../assets/bitcoinQuizBadge.png')}
+                style={{
+                  width: scale(200),
+                  height: scale(100),
+                  marginBottom: scale(-13),
+                }}
+                resizeMode="contain"
+              />
             </View>
 
-            {/* Live label */}
             <View
               style={{
                 backgroundColor: '#FF3B30',
@@ -309,7 +299,6 @@ const HomeScreen = () => {
               </Text>
             </View>
 
-            {/* Title */}
             <Text
               style={{
                 color: '#FFFFFF',
@@ -321,7 +310,6 @@ const HomeScreen = () => {
               Blockchain Fundamentals
             </Text>
 
-            {/* reward and level */}
             <Text
               style={{
                 color: '#ffffff',
@@ -335,7 +323,6 @@ const HomeScreen = () => {
               🔒 Level 10+
             </Text>
 
-            {/* Buttons row */}
             <View
               style={{
                 flexDirection: 'row',
@@ -370,13 +357,13 @@ const HomeScreen = () => {
                 }}
               />
             </View>
+
             <TouchableOpacity
               activeOpacity={0.8}
               style={{
                 width: scale(60),
                 height: scale(60),
                 borderRadius: scale(50),
-                // backgroundColor: '#001D3A',
                 justifyContent: 'center',
                 alignItems: 'center',
                 shadowColor: '#F7D154',
@@ -390,16 +377,11 @@ const HomeScreen = () => {
                 style={{
                   width: scale(80),
                   height: scale(80),
-                  alignContent: 'center',
-                  justifyContent: 'center',
                 }}
               />
             </TouchableOpacity>
           </View>
         </View>
-
-        {/* Bottom padding to ensure scroll spacing */}
-        <View style={{ height: scale(30) }} />
       </ScrollView>
     </View>
   );
