@@ -26,13 +26,13 @@ const HomeScreen = () => {
   const opacity = scrollY.interpolate({
     inputRange: [0, 120],
     outputRange: [1, 0.3],
-    extrapolate: 'clamp',
+    extrapolate: 'extend',
   });
 
   const blurAmount = scrollY.interpolate({
     inputRange: [0, 150],
     outputRange: [0, 20],
-    extrapolate: 'clamp',
+    extrapolate: 'extend',
   });
 
   return (
@@ -224,11 +224,10 @@ const HomeScreen = () => {
           </ImageBackground>
         </Animated.View>
 
-        {/* 🔸 Dynamic Blur (iOS) / Overlay (Android) */}
         {Platform.OS === 'ios' ? (
           <Animated.View
             style={{
-              ...StyleSheet.absoluteFillObject,
+              // ...StyleSheet.absoluteFillObject,
               opacity: scrollY.interpolate({
                 inputRange: [0, 150],
                 outputRange: [0, 1],
@@ -246,8 +245,8 @@ const HomeScreen = () => {
         ) : (
           <Animated.View
             style={{
-              ...StyleSheet.absoluteFillObject,
-              backgroundColor: 'rgba(0,0,0,0.4)',
+              // ...StyleSheet.absoluteFillObject,
+              backgroundColor: 'rgba(0,0,0,0.2)',
               opacity: scrollY.interpolate({
                 inputRange: [0, 150],
                 outputRange: [0, 1],
@@ -420,7 +419,7 @@ const HomeScreen = () => {
           activeOpacity={0.8}
           style={{
             position: 'absolute',
-            bottom: scale(40),
+            bottom: scale(350),
             right: scale(25),
             width: scale(65),
             height: scale(65),
@@ -433,7 +432,8 @@ const HomeScreen = () => {
             shadowOpacity: 0.5,
             shadowRadius: 5,
             elevation: 10,
-            zIndex: 999,
+            // zIndex: 999,
+            zIndex: 1,
           }}
         >
           <Image
